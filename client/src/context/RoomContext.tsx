@@ -6,7 +6,7 @@ import Peer from 'peerjs';
 import {v4 as uuidV4 } from "uuid";
 import { peersReducer } from './peerReducer';
 import { addPeerAction, removePeerAction } from './peerActions';
-import useMediaRecorder from 'use-media-recorder';
+// import useMediaRecorder from 'use-media-recorder';
 
 const host ="http://localhost:3001";
 
@@ -27,18 +27,18 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log("participants=> ",participants);
     }
 
-    const { startRecording, stopRecording, mediaBlob } = useMediaRecorder({
-        video: true,
-        onStop: (blob: Blob) => {
-            // Utilisez le blob pour l'envoyer via le socket ou d'autres moyens
-            console.log("Video blob:", blob);
-            // Exemple d'envoi à travers le socket
-            ws.current.emit("send-video", blob);
-        },
-    });
+    // const { startRecording, stopRecording, mediaBlob } = useMediaRecorder({
+    //     video: true,
+    //     onStop: (blob: Blob) => {
+    //         // Utilisez le blob pour l'envoyer via le socket ou d'autres moyens
+    //         console.log("Video blob:", blob);
+    //         // Exemple d'envoi à travers le socket
+    //         ws.current.emit("send-video", blob);
+    //     },
+    // });
 
-    const [isRecording, setIsRecording] = useState(false);
-    const [setCaptureRef, data, err] = useMediaRecorder({ isRecording });
+    // const [isRecording, setIsRecording] = useState(false);
+    // const [setCaptureRef, data, err] = useMediaRecorder({ isRecording });
 
     const getStream = async () => {
         try {
@@ -103,7 +103,7 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log("peers=> ",{ peers });
 
     return (
-        <RoomContext.Provider value={{ ws, me, stream, peers, startRecording, stopRecording, mediaBlob }}>
+        <RoomContext.Provider value={{ ws, me, stream, peers }}>
             {children}
         </RoomContext.Provider>
     );
